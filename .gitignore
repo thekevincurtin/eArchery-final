@@ -1,3 +1,7 @@
+#idea folder + iml
+.idea/
+*.iml
+
 # Built application files
 *.apk
 *.ap_
