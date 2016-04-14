@@ -41,6 +41,7 @@ public class Chat extends Activity {
 	//eArchery Data
 	private ArrayList<String> accelData;
 	private boolean record = false;
+	long startTime = 0;
 
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -86,10 +87,12 @@ public class Chat extends Activity {
 
 		//instantiate arraylist
 		accelData = new ArrayList<String>();
+		//dbg
+		Log.i("debug",""+System.currentTimeMillis());
 
 		tv = (TextView) findViewById(R.id.textView);
 		tv.setMovementMethod(ScrollingMovementMethod.getInstance());
-		tv.setText("Accelerometer data should append to this field");
+		tv.setText("Accelerometer data\n");
 		et = (EditText) findViewById(R.id.editText);
 		btn = (Button) findViewById(R.id.send);
 		btn.setText("Start Writing");
@@ -101,11 +104,15 @@ public class Chat extends Activity {
 					Toast.makeText(getApplicationContext(), "Stopped recording data", Toast.LENGTH_SHORT).show();
 					record = false;
 					btn.setText("Start Recording");
-
+					Log.i("debug", accelData.toString());
 					//export data
 					Intent intent = new Intent(Intent.ACTION_SEND);
 					intent.setType("text/plain");
-					intent.putExtra(Intent.EXTRA_TEXT, accelData.toString());
+					String export = "";
+					for(int i=0;i<accelData.size();i++){
+						export += (accelData.get(i) + ";");
+					}
+					intent.putExtra(Intent.EXTRA_TEXT, export);
 					startActivity(intent);
 
 					//clear local data
@@ -115,6 +122,8 @@ public class Chat extends Activity {
 					Toast.makeText(getApplicationContext(), "Started recording data", Toast.LENGTH_SHORT).show();
 					record = true;
 					btn.setText("Export");
+					startTime = System.currentTimeMillis();
+					Log.i("Start Time", ""+startTime);
 				}
 			}
 		});
@@ -164,13 +173,18 @@ public class Chat extends Activity {
 
 		System.exit(0);
 	}
-
+	String data = "";
+	boolean isEndOfMessage = false;
 	private void displayData(byte[] byteArray) {
 		if (byteArray != null) {
-			String data = new String(byteArray);
-			tv.append(data);
-
-			accelData.add(data);
+			data += new String(byteArray);
+			if(data.contains("*")){
+				data = data.substring(0,data.length());
+				accelData.add((System.currentTimeMillis() - startTime) + ": " + data);
+				tv.append((System.currentTimeMillis() - startTime) + ": " + data + "\n");
+				Log.i("debug", (System.currentTimeMillis() - startTime) + ": " + data);
+				data = "";
+			}
 			// find the amount we need to scroll. This works by
 			// asking the TextView's internal layout for the position
 			// of the final line and then subtracting the TextView's height
@@ -182,6 +196,7 @@ public class Chat extends Activity {
 				tv.scrollTo(0, scrollAmount);
 			else
 				tv.scrollTo(0, 0);
+
 		}
 	}
 
