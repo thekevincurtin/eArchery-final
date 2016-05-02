@@ -5,8 +5,8 @@
     android:versionName="1.0">
 
     <uses-sdk
-        android:minSdkVersion="18"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="20"
+        android:targetSdkVersion="20" />
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -15,9 +15,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -47,7 +47,25 @@
             android:label="@string/title_activity_initial_traning" />
         <activity
             android:name=".Practice"
-            android:label="@string/title_activity_practice"></activity>
+            android:label="@string/title_activity_practice" />
+        <activity
+            android:name=".MainSelection"
+            android:label="@string/title_activity_main_selection" />
+
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="false" />
+
+        <activity
+            android:name=".WatchActivity"
+            android:label="@string/title_activity_watch"
+            android:theme="@android:style/Theme.DeviceDefault.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -6,5 +6,8 @@
     <string name="searching">Searching....</string>
     <string name="title_activity_initial_traning">InitialTraning</string>
     <string name="title_activity_practice">Practice</string>
+    <string name="title_activity_main_selection">MainSelection</string>
+    <string name="title_activity_watch">WatchActivity</string>
+    <string name="hello_world">Hello World!</string>
 
 </resources>

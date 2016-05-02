@@ -15,7 +15,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,9 +29,7 @@ public class Chat extends Activity {
 	private final static String TAG = Chat.class.getSimpleName();
 
 	public static final String EXTRAS_DEVICE = "EXTRAS_DEVICE";
-	/*private TextView tv = null;
-	private EditText et = null;
-	private Button btn = null;*/
+	private Button shotButton;
 	private String mDeviceName;
 	private String mDeviceAddress;
 	private RBLService mBluetoothLeService;
@@ -38,6 +39,7 @@ public class Chat extends Activity {
 	private ArrayList<String> accelData;
 	private boolean record = false;
 	long startTime = 0;
+	private ListView listView;
 
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -80,77 +82,17 @@ public class Chat extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.second);
-
 		//instantiate arraylist
 		accelData = new ArrayList<String>();
-		//dbg
-		//Log.i("debug",""+System.currentTimeMillis());
-		///ayyyy lmao
-		//tv.setMovementMethod(ScrollingMovementMethod.getInstance());
-		//tv.setText("Accelerometer data should append to this field");
 
-		/*btn.setText("Start Writing");
-		btn.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (record == true) {
-                    Toast.makeText(getApplicationContext(), "Stopped recording data", Toast.LENGTH_SHORT).show();
-                    record = false;
-                    btn.setText("Start Recording");
-
-                    //export data
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_TEXT, accelData.toString());
-                    startActivity(intent);
-
-                    //clear local data
-                    accelData = new ArrayList<String>();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Started recording data", Toast.LENGTH_SHORT).show();
-                    record = true;
-                    btn.setText("Export");
-                }
-            }
-        });*/
-
-        Button trainingButton = (Button)findViewById(R.id.training_button);
-        Button practiceButton = (Button)findViewById(R.id.practice_button);
-        Button statisticsButton = (Button)findViewById(R.id.statistics_button);
-
-        trainingButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newIntent = new Intent(getApplicationContext(),
-                        InitialTraining.class);
-                startActivity(newIntent);
-            }
-        });
-        practiceButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newIntent = new Intent(getApplicationContext(),
-                        Practice.class);
-                startActivity(newIntent);
-            }
-        });
-
-/*
-		tv = (TextView) findViewById(R.id.textView);
-		tv.setMovementMethod(ScrollingMovementMethod.getInstance());
-		tv.setText("Accelerometer data\n");
-		et = (EditText) findViewById(R.id.editText);
-		btn = (Button) findViewById(R.id.send);
-		btn.setText("Start Writing");
-		btn.setOnClickListener(new OnClickListener() {
-
+		shotButton = (Button) findViewById(R.id.shot_button);
+		shotButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if(record == true) {
 					Toast.makeText(getApplicationContext(), "Stopped recording data", Toast.LENGTH_SHORT).show();
 					record = false;
-					btn.setText("Start Recording");
+					shotButton.setText("Start Shot");
 					Log.i("debug", accelData.toString());
 					//export data
 					Intent intent = new Intent(Intent.ACTION_SEND);
@@ -168,23 +110,33 @@ public class Chat extends Activity {
 				else{
 					Toast.makeText(getApplicationContext(), "Started recording data", Toast.LENGTH_SHORT).show();
 					record = true;
-					btn.setText("Export");
+					shotButton.setText("Stop Shot");
 					startTime = System.currentTimeMillis();
 					Log.i("Start Time", ""+startTime);
 				}
 			}
-		});*/
+		});
 
 		Intent intent = getIntent();
 
 		mDeviceAddress = intent.getStringExtra(Device.EXTRA_DEVICE_ADDRESS);
 		mDeviceName = intent.getStringExtra(Device.EXTRA_DEVICE_NAME);
 
-		getActionBar().setTitle(mDeviceName);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Intent gattServiceIntent = new Intent(this, RBLService.class);
 		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+		listView = (ListView) findViewById(R.id.list_view);
+		String[] values = new String[]{"Good","Test2","test420"};
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+		listView.setAdapter(adapter);
+		//update
+		values = new String[]{"Good Release","Good Release","Dead Release","Good Release","Dead Release","Dead Release","Good Release","Dead Release","Pluck Release","Pluck Release",
+				"Pluck Release","Pluck Release","Pluck Release","Good Release"};
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+		listView.setAdapter(adapter);
 	}
 
 	@Override
@@ -223,35 +175,15 @@ public class Chat extends Activity {
 	String data = "";
 	boolean isEndOfMessage = false;
 	private void displayData(byte[] byteArray) {
-
 		if (byteArray != null) {
-			String data = new String(byteArray);
-			Log.i(TAG, data);
-			//tv.append(data);
-
-			accelData.add(data);
 			data += new String(byteArray);
 			if(data.contains("*")){
 				data = data.substring(0,data.length());
 				accelData.add((System.currentTimeMillis() - startTime) + ": " + data);
-				//tv.append((System.currentTimeMillis() - startTime) + ": " + data + "\n");
 				Log.i("debug", (System.currentTimeMillis() - startTime) + ": " + data);
 				data = "";
 			}
-			// find the amount we need to scroll. This works by
-			// asking the TextView's internal layout for the position
-			// of the final line and then subtracting the TextView's height
-			/*final int scrollAmount = tv.getLayout().getLineTop(
-					tv.getLineCount())
-					- tv.getHeight();
-			// if there is no need to scroll, scrollAmount will be <=0
-			if (scrollAmount > 0)
-				tv.scrollTo(0, scrollAmount);
-			else
-				tv.scrollTo(0, 0);
-				tv.scrollTo(0, 0);*/
-
-		}
+        }
 	}
 
 	private void getGattService(BluetoothGattService gattService) {

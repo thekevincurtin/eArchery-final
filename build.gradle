@@ -15,7 +15,13 @@ dependencies {
 android {
     compileSdkVersion 19
     buildToolsVersion "20.0.0"
-
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+    }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

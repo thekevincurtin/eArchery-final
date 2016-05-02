@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:padding="15dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:weightSum="1">
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Initial Training"
-        android:id="@+id/training_button"
+        android:text="Start Shot"
+        android:id="@+id/shot_button"
         android:layout_gravity="center_horizontal"
         android:layout_weight=".15"/>
-    <Button
+
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Practice"
-        android:id="@+id/practice_button"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight=".15"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Statistics"
-        android:id="@+id/statistics_button"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight=".15"/>
+        android:layout_weight=".85"
+        android:layout_height="1dp"
+        android:id="@+id/list_view"
+        android:scrollbars="vertical"/>
+
 </LinearLayout>

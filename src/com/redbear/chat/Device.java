@@ -1,10 +1,5 @@
 package com.redbear.chat;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -14,6 +9,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Device extends Activity implements OnItemClickListener {
 

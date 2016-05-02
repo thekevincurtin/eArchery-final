@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:padding="15dp">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Initial Training"
+        android:id="@+id/training_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".15"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Practice"
+        android:id="@+id/practice_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".15"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Statistics"
+        android:id="@+id/statistics_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight=".15"/>
+</LinearLayout>
