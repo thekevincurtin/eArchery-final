@@ -17,14 +17,8 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView2"
-        android:layout_weight=".15" />
-
-    <ListView
-        android:layout_width="match_parent"
         android:layout_weight=".85"
-        android:layout_height="5dp"
+        android:layout_height="1dp"
         android:id="@+id/list_view"
         android:scrollbars="vertical"/>
 
