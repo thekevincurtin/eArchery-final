@@ -29,7 +29,7 @@ public class Practice extends Activity {
             public void onClick(View view) {
                 if(!isRecording){
                     startTime = System.currentTimeMillis();
-                    //begin recording
+                    //begin recording here
                     isRecording = true;
                     shotButton.setText("Stop Shot");
                     //append data to array
