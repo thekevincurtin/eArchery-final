@@ -18,8 +18,8 @@ public class Practice extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
         listView.setAdapter(adapter);
         //update
-        values = new String[]{"updated","updated","updated","updated","updated","updated","updated","updated","updated","updated",
-                "updated","updated","updated","updated"};
+        values = new String[]{"Good Release","Good Release","Dead Release","Good Release","Dead Release","Dead Release","Good Release","Dead Release","Pluck Release","Pluck Release",
+                "Pluck Release","Pluck Release","Pluck Release","Good Release"};
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
         listView.setAdapter(adapter);
     }

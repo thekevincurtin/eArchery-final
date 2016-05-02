@@ -84,7 +84,7 @@ public class Chat extends Activity {
 		//instantiate arraylist
 		accelData = new ArrayList<String>();
 		//dbg
-		Log.i("debug",""+System.currentTimeMillis());
+		//Log.i("debug",""+System.currentTimeMillis());
 		///ayyyy lmao
 		//tv.setMovementMethod(ScrollingMovementMethod.getInstance());
 		//tv.setText("Accelerometer data should append to this field");
