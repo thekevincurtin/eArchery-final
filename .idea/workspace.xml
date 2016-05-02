@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="logLevel" value="verbose" />
+        <option name="logMessagePattern" value="" />
+        <option name="logTagPattern" value="Bluetoothdevice" />
+        <option name="name" value="mAdress" />
+        <option name="packageNamePattern" value="" />
+        <option name="pid" value="" />
+      </filter>
+    </filters>
+  </component>
   <component name="AndroidLayouts">
     <shared>
       <config />
@@ -61,15 +73,16 @@
       <file leaf-file-name="Chat.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/redbear/chat/Chat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5460751">
-              <caret line="375" column="17" selection-start-line="375" selection-start-column="17" selection-end-line="375" selection-end-column="17" />
+            <state vertical-scroll-proportion="1.15625">
+              <caret line="244" column="39" selection-start-line="244" selection-start-column="36" selection-end-line="244" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5995#6003#0" expanded="true" />
-                <element signature="e#6403#6411#0" expanded="true" />
-                <element signature="e#6813#6821#0" expanded="true" />
-                <element signature="e#9295#9902#0" expanded="true" />
-                <element signature="e#9901#9902#0" expanded="true" />
+                <element signature="e#6019#6027#0" expanded="true" />
+                <element signature="e#6464#6472#0" expanded="true" />
+                <element signature="e#6913#6921#0" expanded="true" />
+                <element signature="e#7369#7377#0" expanded="true" />
+                <element signature="e#9988#10597#0" expanded="true" />
+                <element signature="e#10596#10597#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2077,7 +2090,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1384" height="736" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -2085,7 +2098,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33699635" sideWeight="0.49085367" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.9322344" sideWeight="0.49085367" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -2154,11 +2167,12 @@
           <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5995#6003#0" expanded="true" />
-            <element signature="e#6403#6411#0" expanded="true" />
-            <element signature="e#6813#6821#0" expanded="true" />
-            <element signature="e#9295#9902#0" expanded="true" />
-            <element signature="e#9901#9902#0" expanded="true" />
+            <element signature="e#6019#6027#0" expanded="true" />
+            <element signature="e#6464#6472#0" expanded="true" />
+            <element signature="e#6913#6921#0" expanded="true" />
+            <element signature="e#7369#7377#0" expanded="true" />
+            <element signature="e#9988#10597#0" expanded="true" />
+            <element signature="e#10596#10597#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2185,11 +2199,12 @@
           <caret line="97" column="57" selection-start-line="97" selection-start-column="57" selection-end-line="97" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5995#6003#0" expanded="true" />
-            <element signature="e#6403#6411#0" expanded="true" />
-            <element signature="e#6813#6821#0" expanded="true" />
-            <element signature="e#9295#9902#0" expanded="true" />
-            <element signature="e#9901#9902#0" expanded="true" />
+            <element signature="e#6019#6027#0" expanded="true" />
+            <element signature="e#6464#6472#0" expanded="true" />
+            <element signature="e#6913#6921#0" expanded="true" />
+            <element signature="e#7369#7377#0" expanded="true" />
+            <element signature="e#9988#10597#0" expanded="true" />
+            <element signature="e#10596#10597#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2420,15 +2435,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/redbear/chat/Chat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5460751">
-          <caret line="375" column="17" selection-start-line="375" selection-start-column="17" selection-end-line="375" selection-end-column="17" />
+        <state vertical-scroll-proportion="1.15625">
+          <caret line="244" column="39" selection-start-line="244" selection-start-column="36" selection-end-line="244" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5995#6003#0" expanded="true" />
-            <element signature="e#6403#6411#0" expanded="true" />
-            <element signature="e#6813#6821#0" expanded="true" />
-            <element signature="e#9295#9902#0" expanded="true" />
-            <element signature="e#9901#9902#0" expanded="true" />
+            <element signature="e#6019#6027#0" expanded="true" />
+            <element signature="e#6464#6472#0" expanded="true" />
+            <element signature="e#6913#6921#0" expanded="true" />
+            <element signature="e#7369#7377#0" expanded="true" />
+            <element signature="e#9988#10597#0" expanded="true" />
+            <element signature="e#10596#10597#0" expanded="true" />
           </folding>
         </state>
       </provider>

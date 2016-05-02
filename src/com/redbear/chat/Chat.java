@@ -100,7 +100,7 @@ public class Chat extends Activity {
 			}
 		}
 	};
-	void startNotification(){
+	void startNotification(String message){
 		int notificationId = 001;
 // Build intent for notification content
 		Intent viewIntent = new Intent(this, Chat.class);
@@ -115,7 +115,7 @@ public class Chat extends Activity {
 						.setContentText("Swipe Right")
 						.setContentIntent(viewPendingIntent)
 						.addAction(R.drawable.redbear,
-								"Start", viewPendingIntent);
+								message + "Start", viewPendingIntent);
 
 // Get an instance of the NotificationManager service
 		NotificationManagerCompat notificationManager =
@@ -174,6 +174,7 @@ public class Chat extends Activity {
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
         listView.setAdapter(adapter);
+        startNotification("Good! ");
     }
     private void deadRelease(){
         allResults.add("Dead Release");
@@ -183,6 +184,7 @@ public class Chat extends Activity {
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
         listView.setAdapter(adapter);
+        startNotification("Dead... ");
     }
     private void pluckRelease(){
         allResults.add("Pluck Release");
@@ -192,6 +194,17 @@ public class Chat extends Activity {
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
         listView.setAdapter(adapter);
+        startNotification("Pluck... ");
+    }
+    private void unknownRelease(String result){
+        allResults.add(result);
+        String[] values = new String[allResults.size()];
+        for(int i=0;i<allResults.size();i++){
+            values[i] = allResults.get(i);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        listView.setAdapter(adapter);
+        startNotification("??? ");
     }
     private String analysisRequest(String export){
         // Instantiate the RequestQueue.
@@ -228,6 +241,9 @@ public class Chat extends Activity {
                             //deadRelease();
                             return "dead";
                         }
+                        else{
+                            return "?????";
+                        }
                     }
                     //shotButton.setText(response.toString());
                 } catch (ClientProtocolException e) {
@@ -244,7 +260,7 @@ public class Chat extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.second);
-		startNotification();
+		startNotification("");
 		accelData = new ArrayList<String>();
         allResults = new ArrayList<String>();
         listView = (ListView)findViewById(R.id.list_view);
@@ -254,7 +270,7 @@ public class Chat extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(record == true) {
-					Toast.makeText(getApplicationContext(), "Stopped recording data", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getApplicationContext(), "Stopped recording data", Toast.LENGTH_SHORT).show();
 					record = false;
 					shotButton.setText("Start Shot");
 					Log.i("debug", accelData.toString());
@@ -287,7 +303,7 @@ public class Chat extends Activity {
 			record = false;
             //analyze data here
             exportData();
-			startNotification();
+			//startNotification("");
 		}
 		else if(record == false){//start recording
 			record = true;
@@ -383,6 +399,9 @@ public class Chat extends Activity {
             }
             else if(result=="pluck"){
                 pluckRelease();
+            }
+            else{
+                unknownRelease(result);
             }
         }
     }
