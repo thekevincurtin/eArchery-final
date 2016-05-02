@@ -16,8 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,9 +26,9 @@ public class Chat extends Activity {
 	private final static String TAG = Chat.class.getSimpleName();
 
 	public static final String EXTRAS_DEVICE = "EXTRAS_DEVICE";
-	private TextView tv = null;
+	/*private TextView tv = null;
 	private EditText et = null;
-	private Button btn = null;
+	private Button btn = null;*/
 	private String mDeviceName;
 	private String mDeviceAddress;
 	private RBLService mBluetoothLeService;
@@ -87,7 +85,7 @@ public class Chat extends Activity {
 		accelData = new ArrayList<String>();
 		//dbg
 		Log.i("debug",""+System.currentTimeMillis());
-
+		///ayyyy lmao
 		//tv.setMovementMethod(ScrollingMovementMethod.getInstance());
 		//tv.setText("Accelerometer data should append to this field");
 
@@ -236,7 +234,7 @@ public class Chat extends Activity {
 			if(data.contains("*")){
 				data = data.substring(0,data.length());
 				accelData.add((System.currentTimeMillis() - startTime) + ": " + data);
-				tv.append((System.currentTimeMillis() - startTime) + ": " + data + "\n");
+				//tv.append((System.currentTimeMillis() - startTime) + ": " + data + "\n");
 				Log.i("debug", (System.currentTimeMillis() - startTime) + ": " + data);
 				data = "";
 			}
@@ -250,8 +248,8 @@ public class Chat extends Activity {
 			if (scrollAmount > 0)
 				tv.scrollTo(0, scrollAmount);
 			else
-				tv.scrollTo(0, 0);*/
 				tv.scrollTo(0, 0);
+				tv.scrollTo(0, 0);*/
 
 		}
 	}
