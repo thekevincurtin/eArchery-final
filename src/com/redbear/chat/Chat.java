@@ -1,6 +1,9 @@
 package com.redbear.chat;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -9,8 +12,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +26,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,9 +53,16 @@ public class Chat extends Activity {
 
 	//eArchery Data
 	private ArrayList<String> accelData;
+    private ArrayList<String> allResults;
 	private boolean record = false;
 	long startTime = 0;
 	private ListView listView;
+
+	//notifaction for watch
+	private static final int MY_NOTIFICATION_ID=1;
+	private NotificationManager notificationManager;
+	private Notification myNotification;
+	private int currentPic;
 
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -77,13 +100,154 @@ public class Chat extends Activity {
 			}
 		}
 	};
+	void startNotification(){
+		int notificationId = 001;
+// Build intent for notification content
+		Intent viewIntent = new Intent(this, Chat.class);
+		//viewIntent.putExtra(EXTRA_EVENT_ID, eventId);
+		PendingIntent viewPendingIntent =
+				PendingIntent.getActivity(this, 0, viewIntent, 0);
 
+		NotificationCompat.Builder notificationBuilder =
+				new NotificationCompat.Builder(this)
+						.setSmallIcon(R.drawable.redbear)
+						.setContentTitle("eArchery Practice")
+						.setContentText("Swipe Right")
+						.setContentIntent(viewPendingIntent)
+						.addAction(R.drawable.redbear,
+								"Start", viewPendingIntent);
+
+// Get an instance of the NotificationManager service
+		NotificationManagerCompat notificationManager =
+				NotificationManagerCompat.from(this);
+
+// Build the notification and issues it with notification manager.
+		notificationManager.notify(notificationId, notificationBuilder.build());
+	}
+	void stopNotification(){
+		int notificationId = 001;
+// Build intent for notification content
+		Intent viewIntent = new Intent(this, Chat.class);
+		//viewIntent.putExtra(EXTRA_EVENT_ID, eventId);
+		PendingIntent viewPendingIntent =
+				PendingIntent.getActivity(this, 0, viewIntent, 0);
+
+		NotificationCompat.Builder notificationBuilder =
+				new NotificationCompat.Builder(this)
+						.setSmallIcon(R.drawable.redbear)
+						.setContentTitle("eArchery Practice")
+						.setContentText("Swipe Right")
+						.setContentIntent(viewPendingIntent)
+						.addAction(R.drawable.stop,
+								"Stop", viewPendingIntent);
+
+// Get an instance of the NotificationManager service
+		NotificationManagerCompat notificationManager =
+				NotificationManagerCompat.from(this);
+
+// Build the notification and issues it with notification manager.
+		notificationManager.notify(notificationId, notificationBuilder.build());
+	}
+    private void exportData(){
+        String export = "";
+        for(int i=0;i<accelData.size();i++){
+            export += (accelData.get(i) + "!");
+        }
+        String result = null;
+        //make request
+        new GetRequest().execute(export,null,result);
+
+        /* old method
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, export);
+        startActivity(intent);*/
+
+        //clear local data
+        accelData = new ArrayList<String>();
+    }
+    private void goodRelease(){
+        allResults.add("Good Release");
+        String[] values = new String[allResults.size()];
+        for(int i=0;i<allResults.size();i++){
+            values[i] = allResults.get(i);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        listView.setAdapter(adapter);
+    }
+    private void deadRelease(){
+        allResults.add("Dead Release");
+        String[] values = new String[allResults.size()];
+        for(int i=0;i<allResults.size();i++){
+            values[i] = allResults.get(i);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        listView.setAdapter(adapter);
+    }
+    private void pluckRelease(){
+        allResults.add("Pluck Release");
+        String[] values = new String[allResults.size()];
+        for(int i=0;i<allResults.size();i++){
+            values[i] = allResults.get(i);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        listView.setAdapter(adapter);
+    }
+    private String analysisRequest(String export){
+        // Instantiate the RequestQueue.
+        final String finalExport = export;
+        /*Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {*/
+                HttpClient client = new DefaultHttpClient();
+                String query = "not encoded yet";
+                try {
+                    query = URLEncoder.encode(finalExport, "utf-8");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                String url = "https://earchery.herokuapp.com?raw=" + query;
+                HttpGet request = new HttpGet(url);
+                HttpResponse response;
+                try {
+                    response = client.execute(request);
+                    HttpEntity entity = response.getEntity();
+                    if(entity!=null){
+                        String responseBody = EntityUtils.toString(entity);
+                        Log.d("get response", responseBody);
+                        if(responseBody.contains("good")){
+                            Log.i(TAG,"going in");
+                            //goodRelease();
+                            return "good";
+                        }
+                        else if(responseBody.contains("pluck")){
+                            //pluckRelease();
+                            return "pluck";
+                        }
+                        else if(responseBody.contains("dead")){
+                            //deadRelease();
+                            return "dead";
+                        }
+                    }
+                    //shotButton.setText(response.toString());
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            /*}
+        });
+        t.start();*/
+        return null;
+    }
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.second);
-		//instantiate arraylist
+		startNotification();
 		accelData = new ArrayList<String>();
+        allResults = new ArrayList<String>();
+        listView = (ListView)findViewById(R.id.list_view);
 
 		shotButton = (Button) findViewById(R.id.shot_button);
 		shotButton.setOnClickListener(new OnClickListener() {
@@ -95,17 +259,7 @@ public class Chat extends Activity {
 					shotButton.setText("Start Shot");
 					Log.i("debug", accelData.toString());
 					//export data
-					Intent intent = new Intent(Intent.ACTION_SEND);
-					intent.setType("text/plain");
-					String export = "";
-					for(int i=0;i<accelData.size();i++){
-						export += (accelData.get(i) + ";");
-					}
-					intent.putExtra(Intent.EXTRA_TEXT, export);
-					startActivity(intent);
-
-					//clear local data
-					accelData = new ArrayList<String>();
+					exportData();
 				}
 				else{
 					Toast.makeText(getApplicationContext(), "Started recording data", Toast.LENGTH_SHORT).show();
@@ -127,22 +281,22 @@ public class Chat extends Activity {
 		Intent gattServiceIntent = new Intent(this, RBLService.class);
 		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
-		listView = (ListView) findViewById(R.id.list_view);
-		String[] values = new String[]{"Good","Test2","test420"};
-
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
-		listView.setAdapter(adapter);
-		//update
-		values = new String[]{"Good Release","Good Release","Dead Release","Good Release","Dead Release","Dead Release","Good Release","Dead Release","Pluck Release","Pluck Release",
-				"Pluck Release","Pluck Release","Pluck Release","Good Release"};
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, values);
-		listView.setAdapter(adapter);
 	}
-
+	protected void onNewIntent(Intent intent) {
+		if(record == true){//stop recording
+			record = false;
+            //analyze data here
+            exportData();
+			startNotification();
+		}
+		else if(record == false){//start recording
+			record = true;
+			stopNotification();
+		}
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 		registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
 	}
 
@@ -211,4 +365,25 @@ public class Chat extends Activity {
 
 		return intentFilter;
 	}
+
+    class GetRequest extends AsyncTask<String, Void, String> {
+        String result;
+        @Override
+        protected String doInBackground(String... params) {
+            result = analysisRequest(params[0]);
+            return result;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            if(result=="good"){
+                goodRelease();
+            }
+            else if(result=="dead"){
+                deadRelease();
+            }
+            else if(result=="pluck"){
+                pluckRelease();
+            }
+        }
+    }
 }
